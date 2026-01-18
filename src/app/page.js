@@ -1,18 +1,19 @@
 "use client"; //client component
 import next from "next";
 import { use, useState } from "react"; //importamos esto para guardar los datos que cambian
+import { useEffect, useRef } from "react";
 
-const TEXT = "the quick brown from the crazy dog"; //texto a escribir por el jugador 
-
+const TEXT = "the quick brown from the crazy dog"; //text to be written by the player 
 //Main component
 export default function Home() {
-  const [input, setInput] = useState(""); //lo que escribe el jugador
-  const [startTime, setStartTime] = useState(null); //inicio
-  const [endTime, setEndTime] = useState(null); //fin
-  const arrWord = TEXT.split(" "); //Text separated on an array of words
+  const [input, setInput] = useState(""); //its written by the player
+  const [startTime, setStartTime] = useState(null); //begining
+  const [endTime, setEndTime] = useState(null); //end
   const [hasError, setHasError] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const arrWord = TEXT.split(" "); //Text separated on an array of words
   const time = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
+  const inputRef = useRef(null);
 
   function handleChange(e) {
     if(!startTime) {
@@ -44,8 +45,36 @@ export default function Home() {
     }
   }
 
+  function resetGame() {
+    setCurrentWordIndex(0);
+    setInput("");
+    setHasError(false);
+    setEndTime(null);
+    setStartTime(null);
+    //autofocus on the input
+        setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+  }
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        resetGame();
+        
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown",handleKeyDown);
+    };
+  }, []);
   return (
     <main>
+      <h5>Press Tab to restart</h5>
       <h1>Practice your typing</h1>
       {/* <h3 className="second">Type the quote as fast as you can!</h3>  */}
       <div className="typing-text">
@@ -65,6 +94,7 @@ export default function Home() {
       <div className="input-container">
         <input
           type="text"
+          ref={inputRef} 
           value={input}
           onChange={handleChange}
           disabled={currentWordIndex >= arrWord.length}
