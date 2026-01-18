@@ -47,25 +47,29 @@ export default function Home() {
   return (
     <main>
       <h1>Practice your typing</h1>
-      <h4>Click Star to have a quote disployed.Type the quote as fast as you can!</h4>
-      <div>
+      {/* <h3 className="second">Type the quote as fast as you can!</h3>  */}
+      <div className="typing-text">
         {arrWord.map((word, i) => {
-          let color = "black";
+          let color = "#545463";
           if (i < currentWordIndex) {
-            color = "green";
+            color = "#629677";
           } else if (i === currentWordIndex) {
-            color = hasError ? "red" : "blue";
+            color = hasError ? "#893F45" : "#FFBF00";
           }
-          return <span key={i} style={{ color, marginRight: 5 }}>{word}</span>
+          return <span key={i} style={{ color, }}>
+                      {word}
+                      {i === currentWordIndex && <span className="cursor" />}{" "}
+                      </span>
         })}
       </div>
-      <input
-        type="text"
-        value={input}
-        onChange={handleChange}
-        disabled={currentWordIndex >= arrWord.length}
-        />
-      <button>Start</button>
+      <div className="input-container">
+        <input
+          type="text"
+          value={input}
+          onChange={handleChange}
+          disabled={currentWordIndex >= arrWord.length}
+          />
+        </div>
       {time && <h2>time {time} segundos</h2>}
     </main>
   )
