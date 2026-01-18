@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+📝 Typing Game
 
-## Getting Started
+A fun and interactive typing game built with Next.js. Test your typing speed, accuracy, and challenge yourself to type faster every time!
 
-First, run the development server:
+🚀 Features
 
-```bash
+⏱ Dynamic Timer – Track how fast you type each sentence.
+
+🟢🔴 Word Verification – Words turn green when correct and red when incorrect.
+
+🔄 Restart with TAB – Press TAB to start a new round instantly.
+
+🛠️ Technologies
+
+Next.js 13 – React framework for modern web apps.
+
+React Hooks – useState, useEffect, useRef for dynamic gameplay.
+
+CSS / Flexbox – Clean, responsive layout.
+
+Google Fonts – JetBrains Mono for a typewriter-style font.
+
+🎮 How to Play
+
+Type the sentence displayed on the screen.
+
+Correctly typed words turn green, incorrect words turn red.
+
+Try to type faster and more accurately each round!
+
+📦 Setup & Installation
+
+Clone the repo
+
+git clone https://github.com/yourusername/typing-game.git
+cd typing-game
+
+
+Install dependencies
+
+npm install
+# or
+yarn
+
+
+Run the development server
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Open http://localhost:3000
+ in your browser and start typing!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🖼️ Screenshot
 
-## Learn More
+<img width="1429" height="430" alt="image" src="https://github.com/user-attachments/assets/f8e3928c-4554-4334-86c7-25b47b788255" />
 
-To learn more about Next.js, take a look at the following resources:
+🔑 Tips
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Word-by-Word Checking: The game verifies words as you type, providing instant feedback.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Cursor: Blinking cursor gives the feel of a real typing test.
