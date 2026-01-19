@@ -1,19 +1,30 @@
 body {
     background-color: #2D2D34;
     color: #555562;
+    margin: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     transform: translateY(-100px);
 }
+
+main {
+    width: 100%;
+    max-width: 1000px;       
+    display: flex;
+    flex-direction: column;  
+    align-items: center;     
+    text-align: center;
+}
 .cursor {
   display: inline-block;
   width: 2px;
   height: 1em;
+  left: -2;
   background-color: white;
-  margin-left: 2px;
   animation: blink 1s steps(1) infinite;
+  position:absolute;
 }
 
 @keyframes blink {
@@ -22,8 +33,10 @@ body {
   100% { opacity: 1; }
 }
 
-.typing-text{
-    font-size: 50px;
+.typing-text span {
+    font-size: 45px;
+    position: relative;
+    display: inline-block;
 }
 
 h1 {
@@ -36,15 +49,15 @@ h1 {
     font-size: 30px;
 }
 input {
-    margin-top: 150px;
-    display: block;
-    margin: 0 auto;
+    opacity: 0;
+    pointer-events: none;
 }
 h2 {
     text-align: center;
     font-size: 60px;
     color: #01796F;
 }
-.input-container {
-  margin-top: 30px;
+
+.accuracy {
+    font-size: 35px;
 }

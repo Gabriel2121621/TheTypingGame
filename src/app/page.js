@@ -4,51 +4,52 @@ import { use, useState } from "react"; //importamos esto para guardar los datos 
 import { useEffect, useRef } from "react";
 
 const TEXT = "the quick brown from the crazy dog"; //text to be written by the player 
+
 //Main component
 export default function Home() {
-  const [input, setInput] = useState(""); //its written by the player
-  const [startTime, setStartTime] = useState(null); //begining
-  const [endTime, setEndTime] = useState(null); //end
+  const [input, setInput] = useState("");
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const arrWord = TEXT.split(" "); //Text separated on an array of words
+  const arrLetters = TEXT.split(""); //Text separated on an array of words
   const time = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
   const inputRef = useRef(null);
+  const [mistakes,setMistakes] = useState([]);
+  const isFinished = currentWordIndex === arrLetters.length;
 
   function handleChange(e) {
+    const typedChar = e.target.value;
+    const expectedChar = arrLetters[currentWordIndex];
+    /**
+     * Beggins the counter
+     */
     if(!startTime) {
-      setStartTime(Date.now()); //inicializar el contador 
+      setStartTime(Date.now()); 
     }
-    const value = e.target.value;
 
-    if(value.endsWith(" ")) {
-      const typedWord = value.trim(); //removes the space
-
-      if (typedWord !== arrWord[currentWordIndex]) {
-        setHasError(true); //the word its not correctly writen
-
-      }else{
-        const nextIndex = currentWordIndex + 1;
-        setCurrentWordIndex(nextIndex);
-        setHasError(false);
-
-        if(nextIndex >= arrWord.length) {
-        setEndTime(Date.now());
-        console.log("nextIndex",nextIndex);
-        console.log(arrWord.length)
-      }
-      }
-      setInput(""); //Limpia el input
+    if (typedChar === expectedChar) {
+      setCurrentWordIndex((prev) => prev +1)
 
     }else{
-      setInput(value); //It does the same again with the next word
+      setMistakes((prev) => [...prev, currentWordIndex])
+      setCurrentWordIndex((prev) => prev +1)
     }
+
+    //check if the game its over
+    if (currentWordIndex +1 === arrLetters.length) {
+      setEndTime(Date.now());
+    }
+
+    setInput("");
+
   }
 
   function resetGame() {
     setCurrentWordIndex(0);
     setInput("");
     setHasError(false);
+    setMistakes([]);
     setEndTime(null);
     setStartTime(null);
     //autofocus on the input
@@ -72,35 +73,49 @@ export default function Home() {
       window.removeEventListener("keydown",handleKeyDown);
     };
   }, []);
+
+
   return (
     <main>
       <h5>Press Tab to restart</h5>
       <h1>Practice your typing</h1>
-      {/* <h3 className="second">Type the quote as fast as you can!</h3>  */}
+
       <div className="typing-text">
-        {arrWord.map((word, i) => {
+        {arrLetters.map((letter, i) => {
           let color = "#545463";
           if (i < currentWordIndex) {
-            color = "#629677";
+            //verify if its correct
+            color = mistakes.includes(i) ? "#893F45" : "#629677" ;
           } else if (i === currentWordIndex) {
-            color = hasError ? "#893F45" : "#FFBF00";
+            //its the current letter
+            color = "#FFBF00";
           }
-          return <span key={i} style={{ color, }}>
-                      {word}
-                      {i === currentWordIndex && <span className="cursor" />}{" "}
+          
+          return <span key={i} style={{ color }}>
+                      {i === currentWordIndex && <span className="cursor" />}
+                      {letter === " " ? "\u00A0" : letter}
                       </span>
         })}
       </div>
+
       <div className="input-container">
         <input
           type="text"
           ref={inputRef} 
           value={input}
           onChange={handleChange}
-          disabled={currentWordIndex >= arrWord.length}
+          disabled={currentWordIndex >= arrLetters.length}
+          autoComplete="off"
+          autoFocus
           />
-        </div>
-      {time && <h2>time {time} segundos</h2>}
+      </div>
+
+        {isFinished && (
+          <div style={{ marginTop: "5px" }}>
+            <h2>Result: {time} seconds</h2>
+            <p className="accuracy" >Accuracy: {(((arrLetters.length - mistakes.length) / arrLetters.length) * 100).toFixed(0)}%</p>
+          </div>
+        )}
     </main>
   )
 }
