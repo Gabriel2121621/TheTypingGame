@@ -12,18 +12,33 @@ export default function Home() {
   const [endTime, setEndTime] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const arrLetters = TEXT.split(""); //Text separated on an array of words
-  const time = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
-  const inputRef = useRef(null);
   const [mistakes,setMistakes] = useState([]);
+  const [text,setText] = useState("");
+  const [isLoading,setIsLoading] = useState(true);
+
+  const inputRef = useRef(null);
+
+  const arrLetters = text.split(""); //Text separated on an array of words
+  const time = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
   const isFinished = currentWordIndex === arrLetters.length;
+
+  const fetchQuote = async () => {
+    setIsLoading(true);
+    try{
+      const res = await fetch("/Api/quotes");
+      const data = await res.json();
+      setText(data.text.toLowerCase());
+    }catch(e){
+      setText("say my name");
+    }
+    setIsLoading(false);
+  };
+
 
   function handleChange(e) {
     const typedChar = e.target.value;
     const expectedChar = arrLetters[currentWordIndex];
-    /**
-     * Beggins the counter
-     */
+    
     if(!startTime) {
       setStartTime(Date.now()); 
     }
@@ -40,9 +55,7 @@ export default function Home() {
     if (currentWordIndex +1 === arrLetters.length) {
       setEndTime(Date.now());
     }
-
     setInput("");
-
   }
 
   function resetGame() {
@@ -53,27 +66,41 @@ export default function Home() {
     setEndTime(null);
     setStartTime(null);
     //autofocus on the input
-        setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+    fetchQuote();
   }
+
+  useEffect(() => {
+    fetchQuote();
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "Tab") {
         e.preventDefault();
         resetGame();
-        
       }
     }
-
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown",handleKeyDown);
     };
-  }, []);
+  }, [text]);
 
+  useEffect(() => {
+      if (!isLoading && !isFinished) {
+        inputRef.current?.focus();
+      }
+    }, [isLoading, currentWordIndex, isFinished]);
+
+    if (isLoading) {
+      return <main className="loading"><h1>Charging Sentence...</h1></main>;
+      console.log(text);
+
+    }
 
   return (
     <main>
