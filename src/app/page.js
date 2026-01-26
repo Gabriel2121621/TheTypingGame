@@ -25,10 +25,10 @@ export default function Home() {
   const fetchQuote = async () => {
     setIsLoading(true);
     try{
-      const res = await fetch("/Api/quotes");
+      const res = await fetch("/api/quotes");
       const data = await res.json();
       setText(data.text.toLowerCase());
-    }catch(e){
+    }catch(e){  
       setText("say my name");
     }
     setIsLoading(false);
