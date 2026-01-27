@@ -2,11 +2,13 @@
 import next from "next";
 import { use, useState } from "react"; //importamos esto para guardar los datos que cambian
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const TEXT = "the quick brown from the crazy dog"; //text to be written by the player 
 
 //Main component
 export default function Home() {
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -90,6 +92,19 @@ export default function Home() {
     };
   }, [text]);
 
+  useEffect (() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        router.push("../leaderboard");
+        }
+      };
+      window.addEventListener("keydown",handleKeyDown);
+
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+     }, [router]);
+
   useEffect(() => {
       if (!isLoading && !isFinished) {
         inputRef.current?.focus();
@@ -104,45 +119,48 @@ export default function Home() {
 
   return (
     <main>
-      <h5>Press Tab to restart</h5>
-      <h1>Practice your typing</h1>
+      {!isFinished ? (
+        <main>
+            
+          <h5 className="navigationInfo">Press Tab to restart</h5>
+          <h1 className="mainTitle">Practice your typing</h1>
 
-      <div className="typing-text">
-        {arrLetters.map((letter, i) => {
-          let color = "#545463";
-          if (i < currentWordIndex) {
-            //verify if its correct
-            color = mistakes.includes(i) ? "#893F45" : "#629677" ;
-          } else if (i === currentWordIndex) {
-            //its the current letter
-            color = "#FFBF00";
-          }
-          
-          return <span key={i} style={{ color }}>
-                      {i === currentWordIndex && <span className="cursor" />}
-                      {letter === " " ? "\u00A0" : letter}
-                      </span>
-        })}
-      </div>
-
-      <div className="input-container">
-        <input
-          type="text"
-          ref={inputRef} 
-          value={input}
-          onChange={handleChange}
-          disabled={currentWordIndex >= arrLetters.length}
-          autoComplete="off"
-          autoFocus
-          />
-      </div>
-
-        {isFinished && (
-          <div style={{ marginTop: "5px" }}>
-            <h2>Result: {time} seconds</h2>
-            <p className="accuracy" >Accuracy: {(((arrLetters.length - mistakes.length) / arrLetters.length) * 100).toFixed(0)}%</p>
+          <div className="typing-text">
+            {arrLetters.map((letter, i) => {
+              let color = "#565F89";
+              if (i < currentWordIndex) {
+                //verify if its correct
+                color = mistakes.includes(i) ? "#f7768e" : "#9ECE6A" ;
+              } else if (i === currentWordIndex) {
+                //its the current letter
+                color = "#FFBF00";
+              }
+              
+              return <span key={i} style={{ color }}>
+                          {i === currentWordIndex && <span className="cursor" />}
+                          {letter === " " ? "\u00A0" : letter}
+                          </span>
+            })}
           </div>
-        )}
+
+          <div className="input-container">
+            <input
+              type="text"
+              ref={inputRef} 
+              value={input}
+              onChange={handleChange}
+              disabled={currentWordIndex >= arrLetters.length}
+              autoComplete="off"
+              autoFocus
+              />
+          </div> 
+        </main>
+      ) : (
+        <div style={{ marginTop: "5px" }}>
+            <h1 className="results">Result: {time} seconds</h1>
+            <h2 className="accuracy" >Accuracy: {(((arrLetters.length - mistakes.length) / arrLetters.length) * 100).toFixed(0)}%</h2>
+        </div>
+      )}
     </main>
   )
 }
