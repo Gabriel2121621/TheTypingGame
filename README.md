@@ -1,50 +1,48 @@
-# 📝 Typing Game
+# ⌨️ The Typing Game: Arcade Edition
 
-![Next.js](https://img.shields.io/badge/Next.js-13-black?style=for-the-badge&logo=next.js)
-![React](https://img.shields.io/badge/React-Hooks-blue?style=for-the-badge&logo=react)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
+![Supabase](https://img.shields.io/badge/Supabase-Database-emerald?style=for-the-badge&logo=supabase)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)
 
-A fun and interactive typing game built with **Next.js**. Test your typing speed (WPM), improve your accuracy, and challenge yourself to type faster with every round!
-
----
-
-## 🚀 Features
-
-* **⏱ Dynamic Timer** – Real-time tracking of your typing speed for each sentence.
-* **🟢🔴 Word Verification** – Instant visual feedback: words turn **green** when correct and **red** when incorrect.
-* **🔄 Restart with TAB** – Press the `TAB` key to instantly start a new round without leaving the keyboard.
-* **⌨️ Terminal Aesthetic** – Minimalist UI using *JetBrains Mono* for a professional typewriter feel.
+A high-octane competitive typing experience with a **Tokyo Night** aesthetic. Test your speed, perfect your accuracy, and claim your spot on the global leaderboard.
 
 ---
 
-## 🛠️ Technologies
+## 🚀 New Features
 
-| Technology | Usage |
+* **📊 Global Leaderboard** – Real-time ranking system powered by **Supabase**.
+* **🏆 Performance Analytics** – Automatic calculation of **WPM** (Words Per Minute) and **Accuracy** percentage.
+* **🕹️ Arcade Initials** – Classic "Enter Initials" system (max 5 uppercase characters) to save your legacy.
+* **✨ Cyberpunk UI** – Glassmorphism effects, neon accents, and *JetBrains Mono* typography for a premium terminal feel.
+* **⌨️ Full Keyboard Navigation** – Use `TAB` to restart the game and `SPACE` to toggle between the Game and the Leaderboard.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
 | :--- | :--- |
-| **Next.js 13** | React framework for modern web applications. |
-| **React Hooks** | `useState`, `useEffect`, and `useRef` for dynamic gameplay logic. |
-| **CSS / Flexbox** | Clean, responsive, and centered layout. |
-| **Google Fonts** | *JetBrains Mono* for that distinct developer look. |
+| **Next.js 15+** | Core framework and Server Actions for secure database writes. |
+| **Supabase** | PostgreSQL database for real-time score storage. |
+| **React 19** | Modern state management and high-performance rendering. |
+| **CSS Modules** | Custom variables and animations for the "Tokyo Night" theme. |
 
 ---
 
 ## 🎮 How to Play
 
-1.  **Read** the sentence displayed on the screen.
-2.  **Start typing** as fast and accurately as possible.
-3.  **Monitor colors**: Green means you're on track; red means there's a typo to fix.
-4.  **Beat your record** in the next round!
-
-> [!TIP]
-> **Pro Tip:** You don't need to reach for the mouse. Simply hit the **TAB** key to reset and try again instantly.
+1.  **Type** the sentence displayed as fast as you can.
+2.  **Visual Cues**: Correct letters turn **green**, mistakes turn **red**.
+3.  **Finish**: Once the last character is typed, your stats are instantly calculated.
+4.  **Register**: Enter your 5-letter initials and hit **UPLOAD DATA**.
+5.  **Dominate**: Check the Global Leaderboard to see if you made the Top 10.
 
 ---
 
-## 📦 Setup & Installation
+<img width="1215" height="607" alt="image" src="https://github.com/user-attachments/assets/93f0510d-545b-4b1b-94b9-2def7506adb3" />
+<img width="653" height="594" alt="image" src="https://github.com/user-attachments/assets/020fbe09-b169-4b56-8142-4c4dbf0f7bfa" />
+<img width="884" height="756" alt="image" src="https://github.com/user-attachments/assets/d504670d-019e-4922-9463-ce2a5232fd47" />
+https://the-typing-game-bay.vercel.app/
 
-Follow these steps to run the project locally:
 
-### 1. Clone the repository
-```bash
-git clone [https://github.com/yourusername/typing-game.git](https://github.com/yourusername/typing-game.git)
-cd typing-game
