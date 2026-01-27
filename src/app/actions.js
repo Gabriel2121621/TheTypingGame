@@ -1,18 +1,15 @@
 "use server" //The code runs on the server
 import { supabase } from "@/lib/supabaseClient";
 
-export async function saveNewScore(fromData) {
-    const username = fromData.get("username");
-    const wpm = parseInt(fromData.get("wpm"));
-    const accuracy = parseFloat(fromData.get("accuracy"));
+export async function saveNewScore({ username, wpm, accuracy }) {
 
-    if (wpm > 250) throw new Error("Too fast");
-
+    // if (wpm > 250) throw new Error("Too fast, are you a bot?");
     const { data, error } = await supabase
         .from("ranking")
-        .insert([{ username, wpm, accuracy }]);
+        .insert([{ username, wpm: parseInt(wpm), 
+            accuracy: parseFloat(accuracy)}]);
 
     if (error) throw new Error(error.message);
 
-    return { succes: true};
+    return { success: true};
 }

@@ -3,6 +3,7 @@ import next from "next";
 import { use, useState } from "react"; //importamos esto para guardar los datos que cambian
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { saveNewScore } from "./actions";
 
 const TEXT = "the quick brown from the crazy dog"; //text to be written by the player 
 
@@ -17,11 +18,11 @@ export default function Home() {
   const [mistakes,setMistakes] = useState([]);
   const [text,setText] = useState("");
   const [isLoading,setIsLoading] = useState(true);
+  const [username, setUsername] = useState("");
 
   const inputRef = useRef(null);
 
   const arrLetters = text.split(""); //Text separated on an array of words
-  const time = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
   const isFinished = currentWordIndex === arrLetters.length;
 
   const fetchQuote = async () => {
@@ -36,6 +37,30 @@ export default function Home() {
     setIsLoading(false);
   };
 
+const handleSaveScore = async () => {
+  if (!username.trim()) {
+    alert("Please enter a name");
+    return;
+  }
+
+  const timeInMinutes = (endTime - startTime) / 60000;
+  const wpm = Math.round((arrLetters.length / 5) / timeInMinutes);
+  const accuracy = Math.round(((arrLetters.length - mistakes.length) / arrLetters.length) * 100);
+
+    try {
+      const result = await saveNewScore({ 
+        username: username, 
+        wpm: wpm,
+        accuracy: accuracy 
+      });
+
+      if (result.success) {
+        router.push("/leaderboard");
+      }
+    } catch (error) {
+      alert("Error saving: " + error.message);
+    }
+  };
 
   function handleChange(e) {
     const typedChar = e.target.value;
@@ -121,8 +146,7 @@ export default function Home() {
     <main>
       {!isFinished ? (
         <main>
-            
-          <h5 className="navigationInfo">Press Tab to restart</h5>
+          <h5 className="navigationInfo">Press <span className="key-hint">Tab</span> to restart</h5>
           <h1 className="mainTitle">Practice your typing</h1>
 
           <div className="typing-text">
@@ -142,10 +166,10 @@ export default function Home() {
                           </span>
             })}
           </div>
-
           <div className="input-container">
             <input
               type="text"
+              className="hidden-game-input"
               ref={inputRef} 
               value={input}
               onChange={handleChange}
@@ -156,12 +180,25 @@ export default function Home() {
           </div> 
         </main>
       ) : (
-        <div style={{ marginTop: "5px" }}>
-            <h1 className="results">Result: {time} seconds</h1>
-            <h2 className="accuracy" >Accuracy: {(((arrLetters.length - mistakes.length) / arrLetters.length) * 100).toFixed(0)}%</h2>
-            <input>Give your name</input>
+        <div className="results-container">
+          <h2 className="results">Game Over</h2>
+          <div className="name-input-box">
+            <input 
+              type="text"  
+              maxLength={5}
+              placeholder="_____" 
+              value={username}
+              onChange={(e) => setUsername(e.target.value.toUpperCase())}
+              className="arcade-input"
+              autoFocus 
+            />
+            <button onClick={handleSaveScore} className="save-btn">
+              UPLOAD DATA
+            </button>
+            <p className="hint-text">Press ENTER to save</p>
+          </div>
         </div>
-      )}
-    </main>
+    )}
+  </main>
   )
 }
