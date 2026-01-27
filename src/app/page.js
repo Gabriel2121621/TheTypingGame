@@ -1,11 +1,9 @@
 "use client"; //client component
-import next from "next";
 import { use, useState } from "react"; //importamos esto para guardar los datos que cambian
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { saveNewScore } from "./actions";
 
-const TEXT = "the quick brown from the crazy dog"; //text to be written by the player 
 
 //Main component
 export default function Home() {
@@ -138,8 +136,6 @@ const handleSaveScore = async () => {
 
     if (isLoading) {
       return <main className="loading"><h1>Charging Sentence...</h1></main>;
-      console.log(text);
-
     }
 
   return (
