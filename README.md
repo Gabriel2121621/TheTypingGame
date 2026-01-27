@@ -19,7 +19,7 @@
 * **🏆 Performance Analytics** – Automatic calculation of **WPM** (Words Per Minute) and **Accuracy** percentage.
 * **🕹️ Arcade Initials** – Classic "Enter Initials" system (max 5 uppercase characters) to save your legacy.
 * **✨ Cyberpunk UI** – Glassmorphism effects, neon accents, and *JetBrains Mono* typography for a premium terminal feel.
-* **⌨️ Full Keyboard Navigation** – Use `TAB` to restart the game and `SPACE` to toggle between the Game and the Leaderboard.
+* **⌨️ Full Keyboard Navigation** – Use `TAB` to restart the game and `ENTER` to toggle between the Game and the Leaderboard.
 
 ---
 
