@@ -12,7 +12,6 @@
 | ![Game](https://github.com/user-attachments/assets/93f0510d-545b-4b1b-94b9-2def7506adb3) | ![Stats](https://github.com/user-attachments/assets/020fbe09-b169-4b56-8142-4c4dbf0f7bfa) | ![Ranking](https://github.com/user-attachments/assets/d504670d-019e-4922-9463-ce2a5232fd47) |
 
 ---
----
 
 ## 🚀 New Features
 
@@ -43,7 +42,6 @@
 4.  **Register**: Enter your 5-letter initials and hit **UPLOAD DATA**.
 5.  **Dominate**: Check the Global Leaderboard to see if you made the Top 10.
 
----
 ---
 
 ## 🔧 Setup
