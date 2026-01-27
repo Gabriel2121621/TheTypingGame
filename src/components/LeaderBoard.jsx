@@ -1,37 +1,43 @@
 import { supabase } from "@/lib/supabaseClient";
 
 export default async function LeaderBoard() {
-    const { data: scores } = await supabase
+  const { data: scores } = await supabase
     .from("ranking")
     .select("*")
-    .order("wpm", { ascending: false})
+    .order("wpm", { ascending: false })
     .limit(10);
 
-return (
-    <div>
-      <h1 >Global LeaderBoard</h1>
-      <h3 >Press Esc to go Back</h3>
-      <table className="w-full text-left">
-        <thead>
-          <tr className="border-b border-gray-700">
-            <th className="py-2">#</th>
-            <th>Player</th>
-            <th>WPM</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-          {scores?.map((score, index) => (
-            <tr key={score.id} className="hover:bg-gray-800 transition-colors">
-              <td className="py-2">{index + 1}</td>
-              <td className="font-medium">{score.username}</td>
-              <td className="text-yellow-400 font-bold">{score.wpm}</td>
-              <td className="text-gray-400 text-sm">{score.accuracy}%</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  return (
+    <div className="leaderboard-container">
+      <div className="leaderboard-card">
+        <h1 className="lb-title">Global Leader Board</h1>
+        <h3 className="lb-nav-info">Press <span className="key-hint">Esc</span> to go Back</h3>
+        
+        <div className="table-wrapper">
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th className="text-center">#</th>
+                <th>Player</th>
+                <th className="text-right">WPM</th>
+                <th className="text-right">Accuracy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scores?.map((score, index) => (
+                <tr key={score.id} className={`row-rank-${index + 1}`}>
+                  <td className="rank-col text-center">{index + 1}</td>
+                  <td className="player-col">
+                    <span className="player-name">{score.username}</span>
+                  </td>
+                  <td className="wpm-col text-right">{score.wpm}</td>
+                  <td className="acc-col text-right">{score.accuracy}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
-

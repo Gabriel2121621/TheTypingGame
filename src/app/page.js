@@ -159,6 +159,7 @@ export default function Home() {
         <div style={{ marginTop: "5px" }}>
             <h1 className="results">Result: {time} seconds</h1>
             <h2 className="accuracy" >Accuracy: {(((arrLetters.length - mistakes.length) / arrLetters.length) * 100).toFixed(0)}%</h2>
+            <input>Give your name</input>
         </div>
       )}
     </main>
